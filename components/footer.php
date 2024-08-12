@@ -46,7 +46,7 @@
               if(response.status == 200){
                   var img = `
                     <img style="width:100%;height:100%" src="../uploads/temp/${response.img}">
-                    <button type="button" class=" btn btn-danger btn_cancel">Cancel</button>
+                    <button onclick="CancelImage('${response.img}')" type="button" class=" btn btn-danger btn_cancel">Cancel</button>
                   `;
 
                 $(".preview-image").html(img);
@@ -66,6 +66,22 @@
             dataType: "json",
             success: function (response) {
               
+            }
+          });
+       }
+
+       const CancelImage = (image) => {
+          $.ajax({
+            type: "POST",
+            url: "http://localhost:3000/ajax/Product.php?type=cancel",
+            data: {
+               image_name : image
+            },
+            dataType: "json",
+            success: function (response) {
+              if(response.status == 200){
+                $(".preview-image").html("");
+              }
             }
           });
        }

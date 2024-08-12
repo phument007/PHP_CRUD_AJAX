@@ -37,6 +37,19 @@
 
         break;
     }
+    case 'cancel' : {
+       $image = $_POST['image_name'];
+       $imageDir = "../uploads/temp/$image";
+       if(file_exists($imageDir)){
+          unlink($imageDir);
+          echo json_encode([
+             'status' => 200,
+             'message' => 'Cancel image success',
+          ]);
+       }
+      
+       break;
+    }
   }
   
 
