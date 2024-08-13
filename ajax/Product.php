@@ -1,17 +1,34 @@
 <?php
   //HTTP header file
   header("Content-Type:application/json");
+  $conn = mysqli_connect("localhost:3306","root","","php_ajax");
 
   $type = $_GET['type'];
 
   switch($type){
     case 'insert' : {
 
-        //SQL
+        $name = $_POST['name'];
+        $price = $_POST['price'];
+        $qty = $_POST['qty'];
+        $image = $_POST['image_name'];
+        
+        $sql = "INSERT INTO `products`(`name`, `price`, `qty`, `image`) 
+        VALUES ('$name','$price','$qty','$image')";
+
+        mysqli_query($conn,$sql);
+
+        $tempDir = "../uploads/temp/$image";
+        $imageDir = "../uploads/images/$image";
+
+        if(file_exists($tempDir)){
+          copy($tempDir,$imageDir);
+          unlink($tempDir);
+        }
 
         echo json_encode([
             "status" => 200,
-            "message" => "Product added succss."
+            "message" => "Product added succssfully."
         ]);
         break;
     }

@@ -38,7 +38,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-            <button onclick="SaveProduct();" type="button" class="btn btn-success">Save</button>
+            <button onclick="SaveProduct('#formCreateProduct')" type="button" class="btn btn-success">Save</button>
         </div>
       </form>
 

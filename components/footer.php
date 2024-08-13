@@ -28,7 +28,27 @@
     <script src="assets/js/shared/jquery.cookie.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
+
+      const Message = (message) =>{
+        Toastify({
+          text: `${message}`,
+          duration: 3000,
+          destination: "https://github.com/apvarun/toastify-js",
+          newWindow: true,
+          close: true,
+          gravity: "top", // `top` or `bottom`
+          position: "right", // `left`, `center` or `right`
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+          style: {
+            background: "green",
+          },
+          onClick: function(){} // Callback after click
+        }).showToast();
+      }
+
+
        //Basic ajax
        const UploadImages = (form) => {
 
@@ -45,6 +65,7 @@
             success: function (response) {
               if(response.status == 200){
                   var img = `
+                    <input type="hidden" name="image_name" value="${response.img}">
                     <img style="width:100%;height:100%" src="../uploads/temp/${response.img}">
                     <button onclick="CancelImage('${response.img}')" type="button" class=" btn btn-danger btn_cancel">Cancel</button>
                   `;
@@ -58,14 +79,20 @@
 
        }
 
-       const SaveProduct = () => {
+       const SaveProduct = (form) => {
+          var allData = $(form).serializeArray();  // input=type=>file
           $.ajax({
             type: "POST",
             url: "http://localhost:3000/ajax/Product.php?type=insert",
-            data: {},
+            data: allData,
             dataType: "json",
             success: function (response) {
-              
+              if(response.status == 200){
+                $(form).trigger("reset");
+                $(".preview-image").html("");
+                $("#modalCreateProducts").modal("hide");
+                Message(response.message);
+              }
             }
           });
        }
