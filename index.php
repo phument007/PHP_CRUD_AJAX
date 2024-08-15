@@ -10,7 +10,7 @@
             <h1>Stock</h1>
             <button data-bs-toggle="modal" data-bs-target="#modalCreateProducts" class=" btn btn-primary rounded-0">add more</button>
           </div>
-
+          <!-- <img src="./uploads/images/353048235.webp" alt=""> -->
           <div class="table-responsive">
             <table class="table table-striped table-hover">
               <thead>
@@ -23,18 +23,8 @@
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>image.jpg</td>
-                  <td>Product 1</td>
-                  <td>$300</td>
-                  <td>10</td>
-                  <td>
-                      <button  data-bs-toggle="modal" data-bs-target="#modalEditProducts" class="btn btn-sm btn-info">edit</button>
-                      <button class="btn btn-sm btn-danger">delete</button>
-                  </td>
-                </tr>
+              <tbody class="all_products">
+                 
               </tbody>
             </table>
           </div>

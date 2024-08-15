@@ -6,6 +6,41 @@
   $type = $_GET['type'];
 
   switch($type){
+
+    case "select" : {
+      $sql = "SELECT * FROM `products` ";
+      $result = mysqli_query($conn,$sql);
+      $data = [];
+      while($row=mysqli_fetch_assoc($result)){
+        $data[] = $row;
+      }
+
+      /*data = [
+         [
+           'id' => 1,
+           'name' => 'Product 1',
+           'price' => 100,
+           'qty' => 10,
+           'image' => 'kaka.jpg,
+         ],
+         [
+           'id' => 1,
+           'name' => 'Product 1',
+           'price' => 100,
+           'qty' => 10,
+           'image' => 'kaka.jpg,
+         ],
+
+      ]
+      */
+      echo json_encode([
+        'status' => 200,
+        'data' => $data,
+        'message' => "Select product success",
+      ]);
+      break;
+    }
+
     case 'insert' : {
 
         $name = $_POST['name'];

@@ -48,6 +48,41 @@
         }).showToast();
       }
 
+      const SelectProducts = () => {
+        $.ajax({
+          type: "GET",
+          url: "http://localhost:3000/ajax/Product.php?type=select",
+          dataType: "json",
+          success: function (response) {
+            if(response.status == 200){
+               var products = response.data;
+               var tr = ``;
+               $.each(products, function (index,value) { 
+                  tr += `
+                    <tr>
+                        <td>${value.id}</td>
+                        <td>
+                          <img  src="./uploads/images/${value.image}" alt="">
+                        </td>
+                        <td>${value.name}</td>
+                        <td>$${value.price}</td>
+                        <td>${value.qty}</td>
+                        <td>
+                            <button  data-bs-toggle="modal" data-bs-target="#modalEditProducts" class="btn btn-sm btn-info">edit</button>
+                            <button class="btn btn-sm btn-danger">delete</button>
+                        </td>
+                    </tr>
+                  `;
+               });
+
+               $(".all_products").html(tr);
+            }
+          }
+        });
+      }
+
+      SelectProducts();
+
 
        //Basic ajax
        const UploadImages = (form) => {
