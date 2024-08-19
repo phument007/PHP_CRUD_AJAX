@@ -119,6 +119,20 @@
       ]);
       break;
     }
+
+    case 'edit' : {
+      $id = $_POST['product_id'];
+      $sql = "SELECT * FROM `products` WHERE id = $id";
+      $result = mysqli_query($conn,$sql);
+
+      $row = mysqli_fetch_assoc($result);
+      echo json_encode([
+        'status' => 200,
+        'data' => $row,
+        'message' => 'Product Found.',
+      ]);
+      break;
+    }
   }
   
 

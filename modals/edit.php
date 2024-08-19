@@ -7,7 +7,7 @@
         <h1 class="modal-title fs-5" id="exampleModalLabel">Upate Products</h1>
       </div>
       <div class="modal-body">
-        <form  method="POST">
+        <form  method="POST" id="fromUpdateProduct" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-7">
                     <div class="form-group">
@@ -20,15 +20,17 @@
                     </div>
                     <div class="form-group">
                         <label for="">Product Qty</label>
-                        <input type="number" name="qty"  class="product_price form-control">
+                        <input type="number" name="qty"  class="product_qty form-control">
                     </div>
+                    <input type="text" name="product_id" class="product_id">
+                    <input type="text" name="old_image" class="old_image">
                 </div>
 
                 <div class="col-md-5">
                      <div class="form-group">
                         <label for="">Product Qty</label>
                         <input type="file" name="image"  class="product_image form-control">
-                        <button type="button" class="upload_image btn btn-info rounded-0">upload</button>
+                        <button onclick="UploadImages('#fromUpdateProduct')" type="button" class="upload_image btn btn-info rounded-0">upload</button>
                     </div>
                     <div class="preview-image">
                          

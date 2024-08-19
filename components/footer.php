@@ -68,7 +68,7 @@
                         <td>$${value.price}</td>
                         <td>${value.qty}</td>
                         <td>
-                            <button  data-bs-toggle="modal" data-bs-target="#modalEditProducts" class="btn btn-sm btn-info">edit</button>
+                            <button onclick="EditProduct(${value.id})"  data-bs-toggle="modal" data-bs-target="#modalEditProducts" class="btn btn-sm btn-info">edit</button>
                             <button onclick="DeleteProduct(${value.id},'${value.image}')" class="btn btn-sm btn-danger">delete</button>
                         </td>
                     </tr>
@@ -168,6 +168,34 @@
                 }
               });
             }
+       }
+
+       const EditProduct = (id) => {
+          $.ajax({
+            type: "POST",
+            url: "http://localhost:3000/ajax/Product.php?type=edit",
+            data: {
+              product_id : id
+            },
+            dataType: "json",
+            success: function (response) {
+               if(response.status == 200){
+                 let product = response.data;
+                 $('.product_id').val(product.id);
+                 $(".product_name").val(product.name);
+                 $(".product_price").val(product.price);
+                 $(".product_qty").val(product.qty);
+                 $('.old_image').val(product.image);
+                 var img = `
+                   
+                    <img style="width:100%;height:100%" src="../uploads/images/${product.image}">
+                  
+                  `;
+
+                 $(".preview-image").html(img);
+               }
+            }
+          });
        }
 
        
