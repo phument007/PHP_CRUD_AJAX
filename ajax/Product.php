@@ -67,6 +67,7 @@
         ]);
         break;
     }
+    
     case 'upload' : {
         $file_name = $_FILES['image']['name'];
         $file_tmp  = $_FILES['image']['tmp_name'];
@@ -101,6 +102,22 @@
        }
       
        break;
+    }
+
+    case 'delete' : {
+      $id = $_POST['product_id'];
+      $image = $_POST['image_name'];
+      $sql = "DELETE FROM `products` WHERE `id` = $id";
+      mysqli_query($conn,$sql);
+
+      if(file_exists("../uploads/images/$image")){
+        unlink("../uploads/images/$image");
+      }
+      echo json_encode([
+        'status' => 200,
+        'message' => 'Delete product success',
+      ]);
+      break;
     }
   }
   

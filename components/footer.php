@@ -31,7 +31,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
 
-      const Message = (message) =>{
+      const Message = (message) => {
         Toastify({
           text: `${message}`,
           duration: 3000,
@@ -69,7 +69,7 @@
                         <td>${value.qty}</td>
                         <td>
                             <button  data-bs-toggle="modal" data-bs-target="#modalEditProducts" class="btn btn-sm btn-info">edit</button>
-                            <button class="btn btn-sm btn-danger">delete</button>
+                            <button onclick="DeleteProduct(${value.id},'${value.image}')" class="btn btn-sm btn-danger">delete</button>
                         </td>
                     </tr>
                   `;
@@ -127,6 +127,8 @@
                 $(".preview-image").html("");
                 $("#modalCreateProducts").modal("hide");
                 Message(response.message);
+                SelectProducts();
+               
               }
             }
           });
@@ -147,6 +149,28 @@
             }
           });
        }
+
+       const DeleteProduct = (id,img) => {
+            if(confirm("Do you want to delete this?")){
+              $.ajax({
+                type: "POST",
+                url: "http://localhost:3000/ajax/Product.php?type=delete",
+                data: {
+                  product_id : id,
+                  image_name : img
+                },
+                dataType: "json",
+                success: function (response) {
+                  if(response.status == 200){
+                    Message(response.message);
+                    SelectProducts();
+                  }
+                }
+              });
+            }
+       }
+
+       
     </script>
   </body>
 </html>
