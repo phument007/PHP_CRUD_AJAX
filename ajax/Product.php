@@ -133,6 +133,39 @@
       ]);
       break;
     }
+
+    case 'update' : {
+      $id = $_POST['product_id'];
+      $name = $_POST['name'];
+      $price = $_POST['price'];
+      $qty = $_POST['qty'];
+
+      if(isset($_POST['image_name'])){
+         $image = $_POST['image_name'];
+         $old_image = $_POST['old_image'];
+         $tempDir = "../uploads/temp/$image";
+         $saveDir = "../uploads/images/$image";
+         if(file_exists($tempDir)){
+            copy($tempDir,$saveDir);
+            unlink($tempDir);
+         }
+
+         if(file_exists("../uploads/images/$old_image")){
+            unlink("../uploads/images/$old_image");
+         }
+      }else{
+         $image = $_POST['old_image'];
+      }
+
+      $sql = "UPDATE `products` SET `name`='$name', `price`='$price', `qty`='$qty', `image`='$image' WHERE `id` = $id";
+      mysqli_query($conn,$sql);
+
+      echo json_encode([
+        'status' => 200,
+        'message' => 'Update product success',
+      ]);
+      break;
+    }
   }
   
 

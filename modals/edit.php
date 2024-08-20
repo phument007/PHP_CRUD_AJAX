@@ -40,7 +40,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success">Update</button>
+            <button onclick="UpdateProduct('#fromUpdateProduct')" type="button" class="btn btn-success">Update</button>
         </div>
       </form>
 

@@ -198,6 +198,25 @@
           });
        }
 
+       const UpdateProduct = (form)=> {
+           var allData  = $(form).serializeArray();  //type file
+           $.ajax({
+            type: "POST",
+            url: "http://localhost:3000/ajax/Product.php?type=update",
+            data: allData,
+            dataType: "json",
+            success: function (response) {
+              if(response.status == 200){
+                $(form).trigger("reset");
+                $(".preview-image").html("");
+                $("#modalEditProducts").modal("hide");
+                Message(response.message);
+                SelectProducts();
+              }
+            }
+           });
+       }
+
        
     </script>
   </body>
