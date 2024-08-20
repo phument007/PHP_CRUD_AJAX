@@ -8,7 +8,13 @@
   switch($type){
 
     case "select" : {
-      $sql = "SELECT * FROM `products` ";
+
+
+      $search = $_GET['search_items'];
+
+
+
+      $sql = "SELECT * FROM `products` WHERE `name` LIKE '%$search%' ";
       $result = mysqli_query($conn,$sql);
       $data = [];
       while($row=mysqli_fetch_assoc($result)){

@@ -48,10 +48,13 @@
         }).showToast();
       }
 
-      const SelectProducts = () => {
+      const SelectProducts = (search='') => {
         $.ajax({
           type: "GET",
           url: "http://localhost:3000/ajax/Product.php?type=select",
+          data : {
+            search_items : search
+          },
           dataType: "json",
           success: function (response) {
             if(response.status == 200){
@@ -81,7 +84,12 @@
         });
       }
 
-      SelectProducts();
+      SelectProducts('');
+
+      $(document).on('input','.search_product',function () {
+          let searchValue = $(this).val();
+          SelectProducts(searchValue);
+      });
 
 
        //Basic ajax
@@ -127,7 +135,7 @@
                 $(".preview-image").html("");
                 $("#modalCreateProducts").modal("hide");
                 Message(response.message);
-                SelectProducts();
+                SelectProducts('');
                
               }
             }
@@ -163,7 +171,7 @@
                 success: function (response) {
                   if(response.status == 200){
                     Message(response.message);
-                    SelectProducts();
+                    SelectProducts('');
                   }
                 }
               });
@@ -211,7 +219,7 @@
                 $(".preview-image").html("");
                 $("#modalEditProducts").modal("hide");
                 Message(response.message);
-                SelectProducts();
+                SelectProducts('');
               }
             }
            });
