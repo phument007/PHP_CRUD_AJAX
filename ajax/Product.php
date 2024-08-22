@@ -12,9 +12,13 @@
 
       $search = $_GET['search_items'];
 
+      $page = $_GET['page'];
+
+      $offset = ($page - 1) * 7;
 
 
-      $sql = "SELECT * FROM `products` WHERE `name` LIKE '%$search%' ";
+
+      $sql = "SELECT * FROM `products` WHERE `name` LIKE '%$search%' LIMIT 7 OFFSET $offset ";
       $result = mysqli_query($conn,$sql);
       $data = [];
       while($row=mysqli_fetch_assoc($result)){
@@ -39,9 +43,21 @@
 
       ]
       */
+
+      $sql = "SELECT * FROM `products`  WHERE `name` LIKE '%$search%' ";
+      $result = mysqli_query($conn,$sql);
+      $record = mysqli_num_rows($result);  //20  / 7 = 2.2
+      $totalPage = ceil($record / 7);
+
+
+
+
       echo json_encode([
         'status' => 200,
         'data' => $data,
+        'record' => $record,
+        'totalPage' => $totalPage,
+        'currentPage' => $page,
         'message' => "Select product success",
       ]);
       break;

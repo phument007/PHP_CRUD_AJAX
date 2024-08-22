@@ -8,7 +8,7 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center">
             <h1>Stock</h1>
-            <button data-bs-toggle="modal" data-bs-target="#modalCreateProducts" class=" btn btn-primary rounded-0">add more</button>
+            <button data-bs-toggle="modal" data-bs-target="#modalCreateProducts" class=" btn btn-primary rounded-0 btn_addmore">add more</button>
           </div>
           <!-- <img src="./uploads/images/353048235.webp" alt=""> -->
           <div class="table-responsive">
@@ -27,6 +27,9 @@
                  
               </tbody>
             </table>
+            <div class=" mt-3" id="show-page">
+
+            </div>
           </div>
         </div>
       </div>

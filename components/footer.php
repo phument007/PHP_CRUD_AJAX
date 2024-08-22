@@ -48,12 +48,19 @@
         }).showToast();
       }
 
-      const SelectProducts = (search='') => {
+      $(document).on("click",".btn_addmore",function () {
+         $("#formCreateProduct").trigger('reset');
+         $(".preview-image").html("");
+
+      });
+
+      const SelectProducts = (search='',page=1) => {
         $.ajax({
           type: "GET",
           url: "http://localhost:3000/ajax/Product.php?type=select",
           data : {
-            search_items : search
+            search_items : search,
+            page: page
           },
           dataType: "json",
           success: function (response) {
@@ -77,6 +84,37 @@
                     </tr>
                   `;
                });
+               var totalPage = response.totalPage;
+               var currentPage = response.currentPage;
+               var pagination = `
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                      <li onclick="PreviousPage(${currentPage})" class="page-item ${(currentPage == 1) ? 'd-none' : ''}">
+                        <a class="page-link"  aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>`;
+
+                      for(let i=1;i<=totalPage;i++){
+                         pagination += `
+                           <li onclick="ChangePage(${i})" class="page-item ${(currentPage == i) ? 'active' : ''}"><a class="page-link">${i}</a></li>
+                         `;
+                      }
+
+                      // <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      // <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      // <li class="page-item"><a class="page-link" href="#">3</a></li>
+
+                    pagination +=`  <li onclick="NextPage(${currentPage})" class="page-item ${ (currentPage == totalPage) ? 'd-none' : '' }">
+                        <a class="page-link"  aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                `;
+
+               $("#show-page").html(pagination);
 
                $(".all_products").html(tr);
             }
@@ -84,10 +122,22 @@
         });
       }
 
+      const ChangePage = (page) => {
+        SelectProducts('',page);
+      }
+
+      const NextPage = (currentPage) => {
+        SelectProducts('',currentPage + 1);
+      }
+
+      const PreviousPage = (currentPage) => {
+        SelectProducts('',currentPage - 1);
+      }
+
       SelectProducts('');
 
       $(document).on('input','.search_product',function () {
-          let searchValue = $(this).val();
+          let searchValue = $(this).val().trim();
           SelectProducts(searchValue);
       });
 
